@@ -1,22 +1,39 @@
-# Elm
+# Elm, with infix functions.
 
-A delightful language for reliable webapps.
+Elm has infix functions, but only core developers can use them in core packages.
 
-Check out the [Home Page](http://elm-lang.org/), [Try Online](http://elm-lang.org/try), or [The Official Guide](http://guide.elm-lang.org/)
+With this fork, everyone can use them!
 
+`MyInfix.elm`
+```
+module MyInfix exposing ((<$>))
 
-<br>
+infix left 4 (<$>) = maybemap
 
-## Install
+maybemap = Maybe.map
+```
 
-✨ [Install](https://guide.elm-lang.org/install/elm.html) ✨
+`Main.elm`
+```
+module Main exposing (..)
 
-For multiple versions, previous versions, and uninstallation, see the instructions [here](https://github.com/elm/compiler/blob/master/installers/README.md).
+import MyInfix exposing ((<$>))
 
-<br>
+reverse : Maybe String -> Maybe String
+reverse str = String.reverse <$> str
+```
 
-## Help
+```
+elm make src/Main.elm
+elm repl
 
-If you are stuck, ask around on [the Elm slack channel][slack]. Folks are friendly and happy to help with questions!
+> import Main exposing (reverse)
+> reverse (Just "gnirts a")
+Just ("a string")
+```
 
-[slack]: http://elmlang.herokuapp.com/
+🎉
+
+# Install
+
+Just run `stack install`.
